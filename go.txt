@@ -1,0 +1,30 @@
+EncodeRune
+{0, 4, []byte{0x00}, true},
+{0x7F, 4, []byte{0x7F}, true},
+{0x80, 4, []byte{0xC2, 0x80}, true},
+{0x7FF, 4, []byte{0xDF, 0xBF}, true},
+{0x800, 4, []byte{0xE0, 0xA0, 0x80}, true},
+{0xFFFF, 4, []byte{0xEF, 0xBF, 0xBF}, true},
+{0x10000, 4, []byte{0xF0, 0x90, 0x80, 0x80}, true},
+{0x10FFFF, 4, []byte{0xF4, 0x8F, 0xBF, 0xBF}, true},
+{'€', 2, nil, false},                         // буфер мал
+{0xD800, 4, []byte{0xEF, 0xBF, 0xBD}, true},  // U+FFFD, ok сверьте со спецификацией
+
+AppendRune
+{nil, 0, []byte{0x00}},
+{nil, 0x7F, []byte{0x7F}},
+{nil, 'é', []byte{0xC3, 0xA9}},
+{nil, '€', []byte{0xE2, 0x82, 0xAC}},
+{nil, 0x10000, []byte{0xF0, 0x90, 0x80, 0x80}},
+{[]byte("hello!"), 0, []byte("hello!\x00")},  // добавление в конец
+{[]byte("ab"), 'c', []byte("abc")},
+{nil, 0xD800, []byte{0xEF, 0xBF, 0xBD}},      // если по спецификации заменяется на U+FFFD
+
+Index
+{"foo", "x", -1},       // не найдено
+{"fo", "foo", -1},      // sub длиннее s
+{"foo", "foo", 0},      // sub == s
+{"foo", "f", 0},        // в начале
+{"foofoo", "foo", 0},   // первое вхождение
+{"aaab", "aab", 1},     // частичное совпадение и откат
+{"привет", "в", 6},     // индекс в байтах
