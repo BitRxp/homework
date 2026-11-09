@@ -1,12 +1,12 @@
 EncodeRune
-		{0, 4, 1, true},
-		{0x7F, 4, 1, true},
-		{0x80, 4, 2, true},
-		{0x7FF, 4, 2, true},
-		{0x800, 4, 3, true},
-		{0xFFFF, 4, 3, true},
-		{0x10000, 4, 4, true},
-		{0x10FFFF, 4, 4, true},
+				{make([]byte, 4), 0, 1, true},
+		{make([]byte, 4), 0x7F, 1, true},
+		{make([]byte, 4), 0x80, 2, true},
+		{make([]byte, 4), 0x7FF, 2, true},
+		{make([]byte, 4), 0x800, 3, true},
+		{make([]byte, 4), 0xFFFF, 3, true},
+		{make([]byte, 4), 0x10000, 4, true},
+		{make([]byte, 4), 0x10FFFF, 4, true
 
 
 AppendRune
